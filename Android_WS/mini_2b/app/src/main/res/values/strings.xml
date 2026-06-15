@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">mini_1a</string>
+    <string name="visit_nus">Visit NUS</string>
+    <string name="locate_nus">Locate NUS</string>
+    <string name="call_nus">Call NUS</string>
+    <string name="email_nus">Email NUS</string>
+</resources>

@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "sg.edu.nus.iss.mini_1a"
+    namespace = "sg.edu.nus.iss.mini_1b"
     compileSdk {
         version = release(37) {
             minorApiLevel = 0
@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "sg.edu.nus.iss.mini_1a"
+        applicationId = "sg.edu.nus.iss.mini_1b"
         minSdk = 30
         targetSdk = 37
         versionCode = 1
