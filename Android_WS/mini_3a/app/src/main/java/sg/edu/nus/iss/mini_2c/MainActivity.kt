@@ -54,25 +54,21 @@ class MainActivity : AppCompatActivity() {
                 count++
             }
 
-            // 3. When loop ends, find out WHY it ended
-            if (Thread.interrupted()) {
-                // Thread was stopped midway by the user
-                runOnUiThread {
-                    resetUI()
-                }
-            } else {
+            val completedSuccessfully = (count == Int.MAX_VALUE)
+
+            if (completedSuccessfully) {
                 // Thread finished naturally
                 runOnUiThread {
                     etCount.setText(count.toString())
                     btnToggle.text = "START"
                     computationThread = null // Reset thread tracking
                 }
-            }
+            } // Do nothing if it's interrupted. Let stopComputation handles
         }.apply { start() } // Initialize and run immediately
     }
 
     private fun stopComputation() {
-        // Interrupt the active thread if it's running
+        // Interrupt the active thread
         computationThread?.interrupt()
         computationThread = null
 
@@ -82,8 +78,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun resetUI() {
         etCount.setText("")
-        etCount.hint = "Computing ..."
+        etCount.hint = ""
         btnToggle.text = "START"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Make sure we kill the thread if the activity destroys
+        computationThread?.interrupt()
     }
 
 }

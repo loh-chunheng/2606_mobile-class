@@ -33,7 +33,8 @@
             android:focusable="false"
             android:clickable="false"
             android:textSize="18sp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:hint="" />
     </LinearLayout>
 
     <Button
