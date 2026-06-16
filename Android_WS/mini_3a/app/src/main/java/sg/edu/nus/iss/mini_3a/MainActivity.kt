@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        outputFile = "${externalCacheDir?.absolutePath}/audio.3gp"
+        outputFile = "${cacheDir.absolutePath}/audio.mp4"
 
         val startRecordButton = findViewById<Button>(R.id.btnStart)
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Intercept the user's permission choice (Lecturer's method)
+    // Intercept the user's permission choice
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -94,8 +94,8 @@ class MainActivity : AppCompatActivity() {
 
             mediaRecorder?.apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setOutputFile(outputFile)
                 prepare()
                 start()
@@ -120,10 +120,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun playBackAudio() {
         mediaPlayer?.release()
+        mediaPlayer = null
 
         try {
             mediaPlayer = MediaPlayer().apply {
                 setDataSource(outputFile)
+
+                // Add an error listener to catch playback bugs
+                setOnErrorListener { mp, what, extra ->
+                    Toast.makeText(this@MainActivity, "Player Error: $what", Toast.LENGTH_SHORT).show()
+                    true
+                }
+
                 prepare()
                 start()
             }

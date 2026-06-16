@@ -19,7 +19,7 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
-    val outputFile = "${externalCacheDir?.absolutePath}/audio.3gp"
+    private lateinit var outputFile: String
 
     private var mediaRecorder: MediaRecorder? = null
     private var mediaPlayer: MediaPlayer? = null
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        outputFile = "${cacheDir?.absolutePath}/audio.mp4"
 
         val startRecordButton = findViewById<Button>(R.id.btnStart)
 
@@ -89,8 +91,8 @@ class MainActivity : AppCompatActivity() {
 
             mediaRecorder?.apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
                 setOutputFile(outputFile)
                 prepare()
                 start()
