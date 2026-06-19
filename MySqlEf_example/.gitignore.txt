@@ -1,0 +1,33 @@
+## Core .NET Build Artifacts
+[Bb]in/
+[Oo]bj/
+
+## MSTest, NUnit, or XUnit test outputs
+TestResults/
+
+## Visual Studio Project & User Settings
+*.user
+*.userosscache
+*.suo
+*.userprefs
+.vs/
+
+## VS Code Specific Settings
+.vscode/
+# Uncomment the line below if you want to share VS Code launch settings with teammates
+#!.vscode/launch.json
+
+## Rider / JetBrains IDE Settings
+.idea/
+
+## .NET Core / .NET User Secrets (Safe-keeping for local secrets)
+secrets.json
+.microsoft.dotnet.secretmanager/
+
+## OS-specific files (Mac and Windows system garbage)
+.DS_Store
+Thumbs.db
+
+## NuGet Packages and crash logs
+*.nupkg
+*.log
