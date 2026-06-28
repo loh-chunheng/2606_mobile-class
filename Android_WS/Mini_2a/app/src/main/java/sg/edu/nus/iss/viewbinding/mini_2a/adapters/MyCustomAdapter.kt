@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.viewbinding.mini_2a.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -46,9 +47,11 @@ class MyCustomAdapter(
         if (currentItem.isSelected) {
             holder.textView.setTypeface(null, Typeface.BOLD)
             holder.textView.text = currentItem.caption.uppercase()
+            holder.textView.setBackgroundColor(0xFF89CFF0.toInt()) // blue
         } else {
             holder.textView.setTypeface(null, Typeface.NORMAL)
             holder.textView.text = currentItem.caption
+            holder.textView.setBackgroundColor(0x00000000)
         }
 
 
