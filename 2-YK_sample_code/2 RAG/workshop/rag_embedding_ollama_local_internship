@@ -1,0 +1,96 @@
+# rag_minilm_ollama.py
+# pip install sentence-transformers ollama numpy
+
+import os
+from pathlib import Path
+import numpy as np
+from sentence_transformers import SentenceTransformer
+from ollama import Client
+import PyPDF2
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = Path(__file__).parent / "internship_data"
+EMBED_MODEL = "all-MiniLM-L6-v2"
+CHAT_MODEL = "llama3"
+
+embedder = SentenceTransformer(EMBED_MODEL)
+ollama = Client(host="http://localhost:11434")
+
+
+def load_text(dir_path):
+    combined_text = ""
+    # Look for all PDF files inside the directory
+    pdf_files = list(Path(dir_path).glob("*.pdf"))
+    
+    if not pdf_files:
+        print(f"Warning: No PDF files found in {dir_path}")
+        
+    for pdf_path in pdf_files:
+        with open(pdf_path, "rb") as f:
+            reader = PyPDF2.PdfReader(f)
+            for page in reader.pages:
+                text = page.extract_text()
+                if text:
+                    combined_text += text + "\n"
+    return combined_text
+
+
+def chunk_text(text, chunk_size=1000, overlap=200):
+    """Splits text using RecursiveCharacterTextSplitter.
+    Note: Chunk size is now measured in CHARACTERS, not words."""
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=overlap,
+        separators=["\n\n", "\n", " ", ""]
+    )
+    return splitter.split_text(text)
+
+
+def embed(texts):
+    return embedder.encode(texts, normalize_embeddings=True)
+
+
+def retrieve(query, chunks, chunk_embeddings, top_k=4):
+    q_emb = embed([query])[0]
+    sims = np.dot(chunk_embeddings, q_emb)
+    idx = np.argsort(sims)[::-1][:top_k]
+    return [(chunks[i], float(sims[i])) for i in idx]
+
+
+def answer(query, top_chunks):
+    context = "\n\n".join([f"Chunk {i+1}: {chunk}" for i, (chunk, _) in enumerate(top_chunks)])
+
+    prompt = f"""Use only the context below to answer the question.
+
+Context:
+{context}
+
+Question: {query}
+
+Answer:"""
+
+    resp = ollama.generate(model=CHAT_MODEL, prompt=prompt)
+    return resp["response"]
+
+
+def main():
+    if not os.path.exists(DATA_FILE):
+        raise FileNotFoundError(f"Missing file: {DATA_FILE}")
+
+    text = load_text(DATA_FILE)
+    chunks = chunk_text(text)
+    chunk_embeddings = embed(chunks)
+
+    while True:
+        query = input("\nAsk a question (or type 'exit'): ").strip()
+        if query.lower() == "exit":
+            break
+
+        top_chunks = retrieve(query, chunks, chunk_embeddings, top_k=4)
+        print("\nAnswer:\n")
+        print(answer(query, top_chunks))
+
+
+if __name__ == "__main__":
+    main()

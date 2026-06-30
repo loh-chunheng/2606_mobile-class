@@ -1,0 +1,6 @@
+CAR-001|Toyota Corolla Economy 5 seats $40 per day available affordable unlimited mileage
+CAR-002|Honda Civic Compact 5 seats $45 per day available city car
+CAR-003|Toyota RAV4 SUV 5 seats $80 per day available extra luggage family travel
+CAR-004|Dodge Grand Caravan Van Minivan 7 seats $95 per day available group family
+CAR-005|BMW 5 Series Luxury 5 seats $120 per day not available 200 miles per day
+

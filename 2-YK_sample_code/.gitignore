@@ -1,0 +1,23 @@
+# Python virtual environment
+venv/
+.venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Data files (optional but recommended for large datasets)
+# *.csv
+# *.xlsx
+*.zip
+*.jpg
+
+# Pytorch files
+*.pt

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot + FastAPI Chatbot Demo</title>
+</head>
+<body>
+    <h1>Spring Boot + FastAPI Chatbot Demo</h1>
+
+    <p>
+        Example prompt: What is the late return policy?
+    </p>
+
+    <!--
+        This form posts directly to the Spring MVC controller.
+        No JavaScript is needed because Thymeleaf renders the next page on the server.
+    -->
+    <form th:action="@{/chat}" th:object="${chatRequest}" method="post">
+        <label for="message">Message Input</label>
+        <input id="message" type="text" th:field="*{message}" placeholder="Ask about car rentals">
+        <button type="submit">Send</button>
+    </form>
+
+    <form th:action="@{/clear}" method="post">
+        <button type="submit">Clear</button>
+    </form>
+
+    <!--
+        After Spring Boot receives the FastAPI response, Thymeleaf renders the
+        user message and bot response back into this page.
+    -->
+    <div th:if="${userMessage}">
+        <p><strong>User:</strong> <span th:text="${userMessage}"></span></p>
+    </div>
+
+    <div th:if="${botReply}">
+        <p><strong>Bot:</strong> <span th:text="${botReply}"></span></p>
+    </div>
+</body>
+</html>

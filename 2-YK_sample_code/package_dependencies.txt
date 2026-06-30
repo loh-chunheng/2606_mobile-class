@@ -1,0 +1,25 @@
+# Python packages used in these topics
+# You may install during the workshop exercises, or install all the dependencies at one go, at the beginning of the lesson
+# To install from the file, type the following from your Anaconda Command Prompt
+#     pip install -r package_dependencies.txt
+
+
+# --- LLM / API clients ---
+openai                 # OpenRouter calls (chat.completions) 
+ollama                 # local Ollama python client - folder 2 RAG (local)
+requests               # raw HTTP to local Ollama /api/generate - folder 1 (local Ollama)
+python-dotenv          # load OPENROUTER_API_KEY from a .env file - folders 1, 2, 3
+ 
+# --- FastAPI service  ---
+fastapi
+uvicorn
+ 
+# --- RAG: structured  ---
+pandas                 # read the Excel table
+openpyxl               # required engine for pandas to read .xlsx
+ 
+# --- RAG: embeddings + vector DB  ---
+sentence-transformers  # all-MiniLM-L6-v2 embeddings (also pulls torch - large)
+chromadb               # persistent local vector database
+numpy                  # cosine-similarity demo
+dateparser             # date validation - folder 1 (open router, slot filling)
