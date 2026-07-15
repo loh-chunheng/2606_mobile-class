@@ -66,22 +66,16 @@ class MainActivity : AppCompatActivity() {
             startService(intent)
         }
 
-    }
-
-    // Tune the radio when the Activity starts showing on screen
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onStart() {
-        super.onStart()
-        // Create a filter (tuner) to only let "MUSIC_TRACK_CHANGED" messages through
         val filter = IntentFilter("MUSIC_TRACK_CHANGED")
 
         // Register our receiver with the OS courier
-        registerReceiver(musicReceiver, filter, RECEIVER_NOT_EXPORTED)
+        registerReceiver(musicReceiver, filter, RECEIVER_EXPORTED)
+
     }
 
     // Turn off the radio when the Activity is no longer visible
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         // Unregister to prevent memory leaks and save battery!
         unregisterReceiver(musicReceiver)
     }
