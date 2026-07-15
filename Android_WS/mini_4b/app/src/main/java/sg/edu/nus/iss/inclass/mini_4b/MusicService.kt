@@ -42,6 +42,13 @@ class MusicService : Service() {
             // Select a completely random resource ID from the array
             val randomSongResId = songs.random()
 
+            // Get the actual string name of the file from the Resource ID
+            // This turns R.raw.lofi_rain into the text string "lofi_rain"
+            val songName = resources.getResourceEntryName(randomSongResId)
+
+            // Broadcast the song name to the Activity
+            broadcastSongName(songName)
+
             // Create the player with the chosen random song
             mediaPlayer = MediaPlayer.create(this, randomSongResId).apply {
                 isLooping = false // Usually better to false for random lists so it can switch next
@@ -83,5 +90,13 @@ class MusicService : Service() {
             it.release()
             mediaPlayer = null
         }
+    }
+
+    // Helper function to send out the megaphone message
+    private fun broadcastSongName(name: String) {
+        val intent = Intent("MUSIC_TRACK_CHANGED")
+        intent.putExtra("EXTRA_SONG_NAME", name)
+
+        sendBroadcast(intent)
     }
 }
