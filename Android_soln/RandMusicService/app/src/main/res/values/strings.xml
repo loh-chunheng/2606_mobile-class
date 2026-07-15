@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RandMusicService</string>
+    <string name="play">Play Random MP3</string>
+</resources>
