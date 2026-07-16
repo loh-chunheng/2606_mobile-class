@@ -24,7 +24,8 @@ class MyCustomAdapter(
         var _view = view
 
         if (_view == null) {
-            val inflater = context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val inflater = context.getSystemService(
+                Activity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
             // if we are not responsible for adding the view to the parent,
             // then attachToRoot should be 'false' (which is in our case)
@@ -33,7 +34,8 @@ class MyCustomAdapter(
 
         // set the image for ImageView
         val imageView = _view!!.findViewById<ImageView>(R.id.imageView)
-        val id = context.resources.getIdentifier(toons[pos],"drawable", context.packageName)
+        val id = context.resources.getIdentifier(
+            toons[pos],"drawable", context.packageName)
         imageView?.setImageResource(id)
 
         // set the text for TextView

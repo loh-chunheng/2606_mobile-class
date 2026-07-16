@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MiniRecordAudio</string>
+    <string name="start_record_audio">Start \nRecording</string>
+    <string name="stop_record_audio">Stop \nRecording</string>
+</resources>
